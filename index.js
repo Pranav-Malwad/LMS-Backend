@@ -17,13 +17,13 @@ const Student = require("./models/Students");
 const app = express();
 
 app.use(express.json());
-app.use(cors());
-// app.use(
-//   cors({
-//     origin: process.env.FRONTEND_URL,
-//     credentials: true,
-//   })
-// );
+// app.use(cors());
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
+  })
+);
 
 const secretKey = process.env.SECRETKEY;
 
