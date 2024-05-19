@@ -174,7 +174,7 @@ app.post("/login", async (req, res) => {
     }
 
     // Generate a JWT token
-    // this is jwt token 
+    // this is jwt token
     const token = jwt.sign({ userId: user._id, email }, secretKey, {
       expiresIn: "7d",
     });
@@ -283,7 +283,6 @@ app.put("/update-instructor-profile", verifyToken, async (req, res) => {
 
     // Update the password field in updatedFields with the hashed password
     updatedFields.password = hashedPassword;
-
 
     const instructor = await Instructor.findByIdAndUpdate(
       instructorId,
@@ -631,7 +630,7 @@ const otpStorage = {};
 
 // Endpoint to handle sending OTP
 app.post("/send-otp", async (req, res) => {
-  const { email,userType } = req.body;
+  const { email, userType } = req.body;
 
   try {
     // Check if the email exists in the database
@@ -680,7 +679,7 @@ app.post("/send-otp", async (req, res) => {
 
 // Assuming this is the correct route for handling OTP verification
 app.post("/verify-otp", async (req, res) => {
-  const { email, otp, newPassword,userType } = req.body;
+  const { email, otp, newPassword, userType } = req.body;
 
   try {
     const user = await (userType === "student"
@@ -690,7 +689,7 @@ app.post("/verify-otp", async (req, res) => {
     if (!user) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
-    // Find the user by email  // thsi is our previous code only for the student 
+    // Find the user by email  // thsi is our previous code only for the student
     // const student = await Student.findOne({ email });
     // if (!student) {
     //   return res.status(404).json({ message: "User not found." });
@@ -716,7 +715,7 @@ app.post("/verify-otp", async (req, res) => {
     user.password = hashedPassword;
 
     // await student.save();
-      await user.save();
+    await user.save();
 
     // For demonstration purposes, we'll just send a success message
     res.json({ message: "Password reset successful." });
@@ -857,7 +856,7 @@ connectDB(
   .then(() => console.log("Database connected successfully!"))
   .catch((error) => console.log("Database connection error!", error));
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
