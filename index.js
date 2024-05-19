@@ -25,6 +25,15 @@ app.use(
   })
 );
 
+app.use((req, res, next) => {
+  res.setHeader(
+    "Access-Control-Allow-Origin",
+    "https://learnifycom.netlify.app"
+  );
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  next();
+});
+
 const secretKey = process.env.SECRETKEY;
 
 const verifyToken = (req, res, next) => {
