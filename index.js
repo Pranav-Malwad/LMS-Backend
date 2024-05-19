@@ -44,7 +44,7 @@ const verifyToken = (req, res, next) => {
   }
 
   try {
-    const decoded = jwt.verify(token.split(" ")[1], secretKey);
+    const decoded = jwt.verify(token.split(" ")[1], process.env.secretKey);
     if (!decoded || !decoded.userId) {
       return res.status(401).json({ error: "Invalid user data in token" });
     }
@@ -255,21 +255,11 @@ app.put("/update", verifyToken, async (req, res) => {
   try {
     const userId = req.user.userId;
     const updatedFields = req.body;
-    // console.log(updatedFields);
 
-    // //first we convert the updated password to the hashpassword
-    // const hashedPassword = await bcrypt.hash(updatedFields.password, 10);
-
-    // const student = await Students.findByIdAndUpdate(userId, updatedFields, {
-    //   new: true,
-    // });
-    // Hash the updated password
     const hashedPassword = await bcrypt.hash(updatedFields.password, 10);
 
-    // Update the password field in updatedFields with the hashed password
     updatedFields.password = hashedPassword;
 
-    // Update the student document in the database with the updatedFields
     const student = await Students.findByIdAndUpdate(userId, updatedFields, {
       new: true,
     });
@@ -277,7 +267,6 @@ app.put("/update", verifyToken, async (req, res) => {
     if (!student) {
       return res.status(404).json({ error: "Student not found" });
     }
-    // console.log(student);
     res.status(200).json({
       message: "Student profile updated successfully",
       data: student,
@@ -288,7 +277,6 @@ app.put("/update", verifyToken, async (req, res) => {
   }
 });
 
-// Update instructor profile endpoint
 app.put("/update-instructor-profile", verifyToken, async (req, res) => {
   try {
     const instructorId = req.user.userId;
@@ -296,7 +284,6 @@ app.put("/update-instructor-profile", verifyToken, async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(updatedFields.password, 10);
 
-    // Update the password field in updatedFields with the hashed password
     updatedFields.password = hashedPassword;
 
     const instructor = await Instructor.findByIdAndUpdate(
