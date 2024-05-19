@@ -17,7 +17,13 @@ const Student = require("./models/Students");
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+// app.use(cors());
+app.use(
+  cors({
+    origin: "https://learnifycom.netlify.app", // Replace with your frontend URL
+    credentials: true,
+  })
+);
 
 const secretKey = process.env.SECRETKEY;
 
