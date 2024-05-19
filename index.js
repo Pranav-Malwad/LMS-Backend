@@ -169,6 +169,47 @@ app.post("/register", async (req, res) => {
   }
 });
 
+// app.post("/login", async (req, res) => {
+//   const { userType, email, password } = req.body;
+
+//   try {
+//     // Find the user based on email and userType
+//     const user = await (userType === "student"
+//       ? Students.findOne({ email })
+//       : Instructor.findOne({ email }));
+
+//     if (!user) {
+//       return res.status(401).json({ error: "Invalid credentials" });
+//     }
+
+//     // Check if the password matches
+//     const isPasswordValid = await bcrypt.compare(password, user.password);
+//     if (!isPasswordValid) {
+//       return res.status(401).json({ error: "Invalid credentials" });
+//     }
+
+//     // Generate a JWT token
+//     // this is jwt token
+//     const token = jwt.sign({ userId: user._id, email }, secretKey, {
+//       expiresIn: "7d",
+//     });
+
+//     res.status(200).json({
+//       message: "Login successful",
+//       token,
+//       user: {
+//         id: user._id,
+//         fullName: user.fullName,
+//         email: user.email,
+//         userType,
+//       },
+//     });
+//   } catch (error) {
+//     console.error("Login error:", error);
+//     res.status(500).json({ error: "An unexpected error occurred" });
+//   }
+// });
+
 app.post("/login", async (req, res) => {
   const { userType, email, password } = req.body;
 
@@ -205,7 +246,7 @@ app.post("/login", async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("Login error:", error);
+    console.error("Login error:", error); // Log the error
     res.status(500).json({ error: "An unexpected error occurred" });
   }
 });
