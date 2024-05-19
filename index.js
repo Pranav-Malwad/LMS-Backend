@@ -20,7 +20,7 @@ app.use(express.json());
 // app.use(cors());
 app.use(
   cors({
-    origin: "https://learnifycom.netlify.app", // Replace with your frontend URL
+    origin: process.env.FRONTEND_URL,
     credentials: true,
   })
 );
